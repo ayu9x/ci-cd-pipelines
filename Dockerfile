@@ -44,6 +44,6 @@ EXPOSE 3000
 
 # Health check — Docker will monitor container health
 HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
-  CMD wget --quiet --tries=1 --spider http://localhost:3000/health || exit 1
+  CMD wget --quiet --tries=1 --spider http://127.0.0.1:3000/health || exit 1
 
 CMD ["node", "server.js"]
