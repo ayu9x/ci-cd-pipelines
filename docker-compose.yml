@@ -1,0 +1,28 @@
+# ============================================================
+# Docker Compose — Local Development
+# ============================================================
+# Usage:
+#   docker compose up        → Start the app
+#   docker compose up --build → Rebuild and start
+#   docker compose down      → Stop and remove containers
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        BUILD_VERSION: local-dev
+    container_name: cicd-demo-app
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - BUILD_VERSION=local-dev
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

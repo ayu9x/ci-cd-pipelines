@@ -1,0 +1,16 @@
+{
+  "name": "cicd-pipeline-demo",
+  "version": "1.0.0",
+  "description": "Demo app for CI/CD pipeline — auto-deployed via Jenkins, Docker, and AWS EC2",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "keywords": ["cicd", "jenkins", "docker", "aws", "ec2"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.21.0"
+  }
+}

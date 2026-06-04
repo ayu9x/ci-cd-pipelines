@@ -1,0 +1,26 @@
+# Dependencies
+node_modules
+npm-debug.log*
+
+# Version control
+.git
+.gitignore
+
+# CI/CD & infrastructure (not needed in the image)
+Jenkinsfile
+docker-compose.yml
+scripts/
+docs/
+
+# IDE & OS files
+.vscode
+.idea
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Documentation
+README.md
+LICENSE
+*.md
