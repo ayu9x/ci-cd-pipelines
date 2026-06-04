@@ -1,6 +1,8 @@
 # 🚀 CI/CD Pipeline — Auto Deploy on GitHub Push
 
-Fully automated CI/CD pipeline that deploys your app every time you push to GitHub.
+Fully automated CI/CD pipeline that deploys your Express application and **Live Real-time Dashboard** every time you push to GitHub.
+
+![CI/CD Dashboard](docs/dashboard.png)
 
 ```
 GitHub Push  →  Jenkins  →  Docker Build  →  Docker Hub  →  AWS EC2
@@ -47,6 +49,7 @@ GitHub Push  →  Jenkins  →  Docker Build  →  Docker Hub  →  AWS EC2
 
 ```
 ├── app/
+│   ├── public/                # Live Dashboard UI (HTML/CSS/JS)
 │   ├── server.js              # Express application
 │   └── package.json           # Dependencies
 ├── scripts/
@@ -116,9 +119,12 @@ npm run dev
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
-| `/` | GET | App status, version, deploy time |
-| `/health` | GET | Health check |
-| `/info` | GET | System info (Node version, memory, etc.) |
+| `/` | GET | Dashboard UI (or JSON app status if `Accept: application/json`) |
+| `/api` | GET | App status, version, deploy time |
+| `/api/health` | GET | Health check |
+| `/api/info` | GET | System info (Node version, memory, etc.) |
+| `/health` | GET | Health check (legacy) |
+| `/info` | GET | System info (legacy) |
 
 ## Pipeline Stages
 
