@@ -1,11 +1,3 @@
-
-from top and bottom.
-
----
-
-# Your Jenkinsfile Should Look EXACTLY Like This
-
-:::writing{variant="document" id="52914"}
 pipeline {
     agent any
 
@@ -45,15 +37,11 @@ pipeline {
 
     post {
         success {
-            echo '✅ Deployment Successful!'
+            echo 'Deployment Successful!'
         }
 
         failure {
-            echo '❌ Deployment Failed!'
+            echo 'Deployment Failed!'
         }
     }
 }
-:::
-
----
-
