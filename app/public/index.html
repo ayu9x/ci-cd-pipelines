@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="CI/CD Pipeline Dashboard — Real-time monitoring for automated deployments via Jenkins, Docker, and AWS EC2." />
+  <title>CI/CD Pipeline Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Animated background orbs -->
+  <div class="bg-orbs" aria-hidden="true">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Header -->
+  <header id="main-header">
+    <div class="header-inner">
+      <div class="logo-group">
+        <div class="logo-icon" aria-hidden="true">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+            <circle cx="16" cy="16" r="14" stroke="url(#logoGrad)" stroke-width="2.5"/>
+            <path d="M10 16l4 4 8-8" stroke="url(#logoGrad)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <defs>
+              <linearGradient id="logoGrad" x1="0" y1="0" x2="32" y2="32">
+                <stop stop-color="#6366f1"/>
+                <stop offset="1" stop-color="#a78bfa"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <div>
+          <h1>CI/CD Pipeline</h1>
+          <p class="header-sub">Automated Deployment Dashboard</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="btn-refresh" class="btn-icon" title="Refresh data" aria-label="Refresh data">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 4 23 10 17 10"/>
+            <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>
+          </svg>
+        </button>
+        <span id="live-indicator" class="live-badge">
+          <span class="live-dot"></span> LIVE
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <main id="dashboard">
+    <!-- Pipeline Flow Visualization -->
+    <section id="pipeline-flow" class="card glass-card" aria-labelledby="pipeline-title">
+      <h2 id="pipeline-title" class="section-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+        Pipeline Stages
+      </h2>
+      <div class="pipeline-stages">
+        <div class="stage" id="stage-push" data-stage="push">
+          <div class="stage-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+          </div>
+          <span class="stage-label">GitHub Push</span>
+          <span class="stage-status">Trigger</span>
+        </div>
+        <div class="stage-connector"><div class="connector-line"></div><div class="connector-pulse"></div></div>
+        <div class="stage" id="stage-build" data-stage="build">
+          <div class="stage-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M6 12h4m4 0h4"/><path d="M12 6v12"/></svg>
+          </div>
+          <span class="stage-label">Jenkins Build</span>
+          <span class="stage-status">CI</span>
+        </div>
+        <div class="stage-connector"><div class="connector-line"></div><div class="connector-pulse"></div></div>
+        <div class="stage" id="stage-docker" data-stage="docker">
+          <div class="stage-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-9 9m9-9a9 9 0 0 0-9-9m9 9H3m9 9a9 9 0 0 1-9-9m9 9c1.66 0 3-4.03 3-9s-1.34-9-3-9m0 18c-1.66 0-3-4.03-3-9s1.34-9 3-9m-9 9a9 9 0 0 1 9-9"/></svg>
+          </div>
+          <span class="stage-label">Docker Image</span>
+          <span class="stage-status">Package</span>
+        </div>
+        <div class="stage-connector"><div class="connector-line"></div><div class="connector-pulse"></div></div>
+        <div class="stage" id="stage-push-hub" data-stage="push-hub">
+          <div class="stage-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.3"/></svg>
+          </div>
+          <span class="stage-label">Docker Hub</span>
+          <span class="stage-status">Registry</span>
+        </div>
+        <div class="stage-connector"><div class="connector-line"></div><div class="connector-pulse"></div></div>
+        <div class="stage" id="stage-deploy" data-stage="deploy">
+          <div class="stage-icon">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+          </div>
+          <span class="stage-label">AWS EC2</span>
+          <span class="stage-status">Deploy</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Cards -->
+    <section id="stats-grid" class="stats-grid" aria-label="Deployment statistics">
+      <!-- App Status -->
+      <div class="card glass-card stat-card" id="card-status">
+        <div class="stat-icon green">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <div class="stat-content">
+          <span class="stat-label">App Status</span>
+          <span class="stat-value" id="stat-app-status">Loading...</span>
+        </div>
+      </div>
+      <!-- Health -->
+      <div class="card glass-card stat-card" id="card-health">
+        <div class="stat-icon blue">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <div class="stat-content">
+          <span class="stat-label">Health Check</span>
+          <span class="stat-value" id="stat-health">Loading...</span>
+        </div>
+      </div>
+      <!-- Build Version -->
+      <div class="card glass-card stat-card" id="card-version">
+        <div class="stat-icon purple">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="9"/><line x1="4" y1="15" x2="20" y2="15"/><line x1="10" y1="3" x2="8" y2="21"/><line x1="16" y1="3" x2="14" y2="21"/></svg>
+        </div>
+        <div class="stat-content">
+          <span class="stat-label">Build Version</span>
+          <span class="stat-value mono" id="stat-version">Loading...</span>
+        </div>
+      </div>
+      <!-- Uptime -->
+      <div class="card glass-card stat-card" id="card-uptime">
+        <div class="stat-icon amber">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <div class="stat-content">
+          <span class="stat-label">Uptime</span>
+          <span class="stat-value" id="stat-uptime">Loading...</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Detail Cards Row -->
+    <section class="detail-grid">
+      <!-- System Info -->
+      <div class="card glass-card" id="card-system-info">
+        <h2 class="section-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
+          System Information
+        </h2>
+        <div class="info-list" id="system-info-list">
+          <div class="info-row skeleton"><span class="info-key">Loading...</span><span class="info-val"></span></div>
+        </div>
+      </div>
+
+      <!-- Deployment Timeline -->
+      <div class="card glass-card" id="card-timeline">
+        <h2 class="section-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Deployment Timeline
+        </h2>
+        <div class="timeline" id="timeline">
+          <div class="timeline-item" id="tl-deployed">
+            <div class="tl-dot green"></div>
+            <div class="tl-content">
+              <span class="tl-title">Deployed</span>
+              <span class="tl-time" id="tl-deployed-time">—</span>
+            </div>
+          </div>
+          <div class="timeline-item" id="tl-health-check">
+            <div class="tl-dot blue"></div>
+            <div class="tl-content">
+              <span class="tl-title">Last Health Check</span>
+              <span class="tl-time" id="tl-health-time">—</span>
+            </div>
+          </div>
+          <div class="timeline-item" id="tl-refresh">
+            <div class="tl-dot purple"></div>
+            <div class="tl-content">
+              <span class="tl-title">Dashboard Refreshed</span>
+              <span class="tl-time" id="tl-refresh-time">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- API Endpoints Reference -->
+    <section class="card glass-card" id="card-endpoints">
+      <h2 class="section-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        API Endpoints
+      </h2>
+      <div class="endpoints-table-wrap">
+        <table class="endpoints-table" id="endpoints-table">
+          <thead>
+            <tr><th>Endpoint</th><th>Method</th><th>Description</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>/</code></td>
+              <td><span class="method-badge get">GET</span></td>
+              <td>App status, version, deploy time</td>
+              <td><span class="ep-status" id="ep-root">…</span></td>
+            </tr>
+            <tr>
+              <td><code>/health</code></td>
+              <td><span class="method-badge get">GET</span></td>
+              <td>Health check</td>
+              <td><span class="ep-status" id="ep-health">…</span></td>
+            </tr>
+            <tr>
+              <td><code>/info</code></td>
+              <td><span class="method-badge get">GET</span></td>
+              <td>System info (Node version, memory, etc.)</td>
+              <td><span class="ep-status" id="ep-info">…</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer id="main-footer">
+    <p>CI/CD Pipeline Demo &mdash; Jenkins &bull; Docker &bull; AWS EC2</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
